@@ -1,17 +1,22 @@
 package twopointers
 
-import "testing"
+import (
+	"strings"
+	"testing"
+)
 
-func validPalindromes(str string) bool {
-	left, right := 0, len(str)-1
+func validPalindrome(s string) bool {
+	left, right := 0, len(s)-1
 	for left < right {
-		for !isAlnum(str[left]) && left < right {
+		for !isAlnum(s[left]) && left < right {
 			left++
 		}
-		for !isAlnum(str[right]) && right > left {
+		for !isAlnum(s[right]) && right > left {
 			right--
 		}
-		if str[left] != str[right] {
+		strLeft := string(s[left])
+		strRight := string(s[right])
+		if strings.ToLower(strLeft) != strings.ToLower(strRight) {
 			return false
 		}
 		left++
@@ -38,9 +43,10 @@ func TestValidPalindrome(t *testing.T) {
 		{"21.02.2021", false},
 		{"hello, world!", false},
 		{"a dog! a panic in a pagoda.", true},
+		{"A man, a plan, a canal: Panama", true},
 	}
 	for _, test := range tests {
-		if test.want != validPalindromes(test.input) {
+		if test.want != validPalindrome(test.input) {
 			t.Errorf("test failed, input:%v, got:%v", test.input, test.want)
 		}
 	}

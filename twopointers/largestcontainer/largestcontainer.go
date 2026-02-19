@@ -1,21 +1,25 @@
 package largestcontainer
 
 func largestcontainer(nums []int) int {
-	left, right := 0, len(nums)-1
 	maxArea := 0
-	for left < right {
-		heightLeft, heightRight := nums[left], nums[right]
-		area := min(heightLeft, heightRight) * (right - left)
-		maxArea = max(maxArea, area)
+	left, right := 0, len(nums)-1
 
-		// move the pointers
-		if heightLeft > heightRight {
+	for left < right {
+		height := min(nums[left], nums[right])
+		length := right - left
+
+		area := height * length
+		if area > maxArea {
+			maxArea = area
+		}
+
+		if nums[left] > nums[right] {
 			right--
-		} else if heightLeft < heightRight {
+		} else if nums[left] < nums[right] {
 			left++
 		} else {
-			left++
 			right--
+			left++
 		}
 	}
 	return maxArea
